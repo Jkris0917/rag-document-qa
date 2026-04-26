@@ -1,0 +1,19 @@
+# Environment — NEVER commit your real .env
+.env
+.env.local
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# ChromaDB (rebuilds from PDFs automatically)
+data/chroma/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node (for React frontend later)
+node_modules/
