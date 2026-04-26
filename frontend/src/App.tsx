@@ -63,7 +63,6 @@ export default function App() {
               <AnswerCard key={i} message={msg} />
             ))}
 
-            {/* Typing indicator */}
             {isAsking && (
               <div className="flex items-center gap-2">
                 <div className="w-5 h-5 rounded-full bg-gray-800 border border-emerald-500
