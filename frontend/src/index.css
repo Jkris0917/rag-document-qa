@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+:root {
+  --emerald: #10b981;
+  --emerald-dark: #059669;
+  --emerald-dim: #0d4a2e;
+}
+
+body {
+  @apply bg-gray-950 text-gray-100 h-screen overflow-hidden;
+  font-family: system-ui, sans-serif;
+}
+
+.light body {
+  @apply bg-white text-gray-900;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { @apply bg-transparent; }
+::-webkit-scrollbar-thumb { @apply bg-gray-700 rounded-full; }

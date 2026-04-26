@@ -22,7 +22,7 @@ def embed_and_store(chunks: list[dict], embedder, collection):
         page = chunk["page"]
         chunk_id = str(chunk["chunk_id"])
 
-        embedding = embedder.encode(text).tolist()  # Convert to list for storage
+        embedding = embedder.encode(text).tolist()  
 
         collection.add(
             ids=[chunk_id],
@@ -30,6 +30,11 @@ def embed_and_store(chunks: list[dict], embedder, collection):
             documents=[text],
             metadatas=[{"page": page}]
         )
+
+def clear_collection(collection):
+    ids = collection.get()['ids']
+    if ids:
+        collection.delete(ids=ids)
         
 if __name__ == "__main__":
     load_dotenv()
