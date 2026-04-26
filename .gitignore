@@ -17,3 +17,8 @@ Thumbs.db
 
 # Node (for React frontend later)
 node_modules/
+
+echo "data/" >> .gitignore
+echo "__pycache__/" >> .gitignore
+echo "*.pyc" >> .gitignore
+echo ".env" >> .gitignore

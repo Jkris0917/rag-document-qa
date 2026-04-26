@@ -10,10 +10,15 @@ from rag import answer
 load_dotenv()
 
 app = FastAPI()
-
+os.makedirs("data", exist_ok=True)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  
+    allow_origins=[
+        "http://localhost:5173",
+        "https://rag-document-qa.vercel.app",  # replace with your actual Vercel URL
+        "https://*.vercel.app",                 # covers all Vercel preview URLs
+    ],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
