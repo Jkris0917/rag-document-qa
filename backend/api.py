@@ -5,7 +5,8 @@ import shutil
 import os
 from dotenv import load_dotenv
 from embed import load_embedder, get_chroma_collection, embed_and_store, clear_collection
-from rag import answer
+from rag import answer,stream_answer
+from fastapi.responses import StreamingResponse
 
 load_dotenv()
 
@@ -50,3 +51,15 @@ async def ask_question(request: dict):
     
     result = answer(question, embedder, collection, groq_client, model)
     return result
+
+@app.post("/ask-stream")
+async def ask_question_stream(request: dict):
+    question = request.get("question")
+    if not question:
+        return {"error": "Question is required."}
+    
+    def event_generator():
+        for result in stream_answer(question, embedder, collection, groq_client, model):
+            yield result
+
+    return StreamingResponse(event_generator(), media_type="text/event-stream")

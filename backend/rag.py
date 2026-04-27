@@ -46,7 +46,27 @@ def answer(query: str, embedder, collection, groq_client, model: str) -> dict:
         "answer": answer_text,
         "sources": sources
     }
+
+def stream_answer(query: str, embedder, collection, groq_client, model: str):
+    context_chunks = retrieve(query, embedder, collection)
+    prompt = build_prompt(query, context_chunks)
     
+    response = groq_client.chat.completions.create(
+        model=model,
+        messages=[{"role": "system", "content": "You are a helpful assistant that answers questions based on provided document excerpts."},
+                  {"role": "user", "content": prompt}],
+        max_tokens=500,
+        stream=True
+    )
+
+    for token_chunk in response:
+        token = token_chunk.choices[0].delta.content or ""
+        if token:
+            yield token
+
+    sources = list(set([c["page"] for c in context_chunks]))
+    yield f"\n__SOURCES__{sources}"
+        
 if __name__ == "__main__":
     load_dotenv()
     from embed import load_embedder, get_chroma_collection
